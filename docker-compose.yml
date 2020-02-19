@@ -48,10 +48,10 @@ services:
     - neo4j
     - elasticsearch
 
-  # federation:
-  #   build: ./federation
-  #   ports:
-  #     - 4000:4000
+  federation:
+    build: ./federation
+    ports:
+      - 4000:4000
 
   ui:
     build: ./ui-react
