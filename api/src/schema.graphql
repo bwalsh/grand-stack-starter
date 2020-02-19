@@ -14,7 +14,7 @@ type User {
   metrics: UserMetrics  @neo4j_ignore
 }
 # note: this is a 'calculated' object to hold aggregations,
-# see resolver of the same name
+# fetch user aggregations from elastic using user_ids
 type UserMetrics {
   user_id: ID!
   reviews_length: Int
@@ -53,11 +53,9 @@ type Query {
     )
   # search users using elastic
   searchUsers(q: String): [User]
-  # fetch users from elastic using array of user ids
+  # fetch users from neo4j using array of user ids
   usersById(ids:[ID!]): [User]
     @cypher(
       statement: "MATCH (u:User) WHERE u.id IN $ids RETURN u"
     )
-  # fetch user aggregations from elastic using user_ids
-  UserMetrics(user_id:ID, reviews_length: Int): UserMetrics
 }

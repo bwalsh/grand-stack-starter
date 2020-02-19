@@ -31,17 +31,17 @@ const resolvers = {
       console.log(`  parent: ${resolveInfo.parentType}: ${util.inspect(object, false, null, true)}`)
       // retrieve aggregations from elastic ...
       const aggregateUsers = async (user_ids) => {
+        const q = `id:(${user_ids.map(s => `'${s}'`).join(',')})`;
         const results = await elastic.search( {
           index: INDEX,
-          q: `id:(${user_ids.map(s => `'${s}'`).join(',')})`,
+          q: q,
           _source_includes: ['id', 'reviews_length']
         });
-        console.log(`from elastic`)
-        console.log(util.inspect(results.body, false, null, true))
+        // console.log(util.inspect(results.body, false, null, true))
         const metrics = results.body.hits.hits.map(h => {
           return {id: h._source.id, reviews_length: h._source.reviews_length};
         })
-        console.log(util.inspect(metrics, false, null, true))
+        console.log(`from elastic q=${q} metrics:${util.inspect(metrics, false, null, true)}`)
         return metrics
       }
       // fetch from external service ...
@@ -69,10 +69,8 @@ const resolvers = {
           q: q,
           _source_includes: 'id'
         });
-        // console.log(`from elastic`)
-        // console.log(util.inspect(results, false, null, true))
         const ids = results.body.hits.hits.map(h => h._source.id)
-        // console.log(util.inspect(ids, false, null, true))
+        console.log(`from elastic q=${q} ids:${util.inspect(ids, false, null, true)}`)
         return ids
       }
       // fetch from external service ...
