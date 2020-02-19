@@ -1,6 +1,6 @@
 {
   "name": "grand-stack-starter-api",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "API app for GRANDstack",
   "main": "src/index.js",
   "scripts": {
@@ -9,7 +9,7 @@
     "build": "babel src -d build && shx cp .env build && shx cp src/schema.graphql build",
     "now-build": "babel src -d build && shx cp .env build && shx cp src/schema.graphql build",
     "start": "npm run build && node build/index.js",
-    "seedDb": "./node_modules/.bin/babel-node src/seed/seed-db.js"
+    "seedDb": "./node_modules/.bin/babel-node src/seed/seed-db.js && ./node_modules/.bin/babel-node src/seed/seed-es.js"
   },
   "author": "William Lyon",
   "license": "MIT",
@@ -23,7 +23,9 @@
     "graphql-tag": "^2.10.1",
     "neo4j-driver": "^1.7.5",
     "neo4j-graphql-js": "^2.7.1",
-    "node-fetch": "^2.6.0"
+    "node-fetch": "^2.6.0",
+    "@apollo/federation": "latest",
+    "@elastic/elasticsearch":  "latest"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

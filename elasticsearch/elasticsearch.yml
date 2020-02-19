@@ -1,0 +1,7 @@
+network.host: 0.0.0.0
+http.cors.enabled: true
+http.cors.allow-origin: "*"
+cluster.name: elasticsearch_nodkz
+opendistro_security.disabled: true
+# script.inline: true
+# xpack.security.enabled: false
